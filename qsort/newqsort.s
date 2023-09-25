@@ -12,8 +12,6 @@ myqsort:
 
     b step1
 
-    // 递归
-
 step1:
     cmp x1, x2
     b.gt end   // left > right ==> over
@@ -27,7 +25,7 @@ step1:
 step4:
     // while(i<j)
     cmp w3, w4
-    b.ge step28 // greater or equal break to step28
+    b.ge step66 // greater or equal break to step28
 
 step8:
     lsl w8, w4, #2  // j ---> offset
