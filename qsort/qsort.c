@@ -1,6 +1,7 @@
 #include <stdio.h>
 
-extern void myqsort(int arr[], int left, int right);
+//extern void myquicksort(int *arr, int left, int right);
+extern void QkSort(int *arr, int left, int right);
 
 void printStr(int str[], size_t len)
 {
@@ -16,8 +17,8 @@ int main(){
     printf("before qsort\n");
     printStr(str, 10);
 
-    myqsort(str, 0, 9);
-
+//    myquicksort(str, 0, 9);
+    QkSort(str, 0, 9);
     printf("after qsort\n");
     printStr(str, 10);
 }
