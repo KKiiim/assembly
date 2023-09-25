@@ -21,52 +21,60 @@ step1:
 
     lsl x5, x1, #2
     ldr w5, [x0, x3]    // get tmp value
+    b step2
 
-step4:
+step2:
     // while(i<j)
     cmp w3, w4
-    b.ge step66 // greater or equal break to step28
+    b.ge step6 // greater or equal break to step28
+                // while over
+    b step3
 
-step8:
+step3:
     lsl w8, w4, #2  // j ---> offset
     ldr w9, [x0, w8]    // w9 = str[j]
 
     cmp w9, w5  // str[j] 和 keyvalue 比大小
-    b.lt step9
+    b.lt step4    // 仅结束本while，跳转到另一个内层的while
 
     cmp w3, w4  // 比较ij
-    b.ge step12
+    b.ge step5    // 直接结束两个内层while
 
     // 进入循环体，--后continue
     sub w4, w4, #1
-    b step8
+    b step3
 
 // j的处理完之后，开始处理本轮的i
-step9:
+step4:
     lsl w6, w3, #2
     ldr w7, [x0, x6]    // w7 = str[i]
 
+    // while(a&&b) 任意条件不满足就结束整个内层
     cmp w7, w5
-    b.gt step12
-
+    b.gt step5
     cmp w3, w4
-    b.ge step12
+    b.ge step5
 
+    // 满足while条件
     // 进入循环体，++后continue
     add w3, w3, #1
-    b step9
+    b step4
 
-step12:
+step5:
+    // 两个内层while结束之后
+    
     // w8 j最后的偏移量
     // w6 i最后的偏移量
+    // swap
     ldr w10, [x0, x6]
     ldr w11, [x0, x8]
     str w10, [x0, x8]
     str w11, [x0, x6]
 
-    b step1
+    b step2
 
-step66:
+step6:
+    // 把环境保存在栈中，再进行递归
     stp w1, w2, [sp, #-48]!
     stp w3, w4, [sp, #8]
     stp x5, x29, [sp, #16]
