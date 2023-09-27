@@ -12,12 +12,20 @@ mymemset:
     mov x4, x1      // #
     lsl x5, x1, #8
     add x4, x4, x5  // ##
-    lsl x5, x1, #16
+    lsl x5, x5, #8
     add x4, x4, x5  // ###
-    lsl x5, x1, #24 
+    lsl x5, x5, #8 
     add x4, x4, x5  // ####
                     // w4
-
+    lsl x5, x5, #8
+    add x4, x4, x5  // #####
+    lsl x5, x5, #8
+    add x4, x4, x5  // ######
+    lsl x5, x5, #8
+    add x4, x4, x5  // #######
+    lsl x5, x5, #8
+    add x4, x4, x5  // ########
+                    // x4
 
     b .loop
 
@@ -25,41 +33,25 @@ mymemset:
     cmp w2, #0             // 检查是否已经填充完所有字
     b.eq .end
 
-// 一次取四个字节
-    subs x2, x2, #4
+// 一次取十六个字节
+    subs x2, x2, #16
     b.mi .laststore
-    b .common
 
-// 正常处理四个字节
+// 正常处理十六个字节
 .common:
-    str w4, [x0, x2]
+    strp x4, x4, [x0, x2]
     b .loop
 
 // 异常情况
 .laststore:
-    add x2, x2, #4  // x2 is last transfer
-    // todo
-    cmp x2, #1
-    b.eq .one_last
+    add x2, x2, #16  // x2 is last transfer
 
-    cmp x2, #2
-    b.eq .two_last
+.oneByone_loop
 
-    cmp x2, #3
-    b.eq .three_last
-
-.one_last:
-    strb w4, [x3]
-    ret
-
-.two_last:
-    strh w4, [x3]
-    ret
-
-.three_last:
     strh w4, [x3]
     strb w4, [x3, #2]
     ret
+
 
 .end:
 
