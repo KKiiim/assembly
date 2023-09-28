@@ -30,29 +30,31 @@ mymemset:
     b .loop
 
 .loop:
-    cmp w2, #0             // 检查是否已经填充完所有字
-    b.eq .end
-
+// 检查是否已经填充完所有字
 // 一次取十六个字节
     subs x2, x2, #16
     b.mi .laststore
 
 // 正常处理十六个字节
 .common:
-    strp x4, x4, [x0, x2]
+    mov x7, x0
+    add x7, x7, x2
+
+    stp x4, x4, [x7]
     b .loop
 
 // 异常情况
 .laststore:
     add x2, x2, #16  // x2 is last transfer
+    mov x6, #0
 
-.oneByone_loop
-
-    strh w4, [x3]
-    strb w4, [x3, #2]
-    ret
-
-
-.end:
-
+.oneByone_loop:
+    strh w4, [x3, x2]
+    mov x7, #1
+    add x6, x6, x7
+    cmp x2, x6
+    b.eq .myend 
+    b oneByone_loop
+    
+.myend:
     ret
