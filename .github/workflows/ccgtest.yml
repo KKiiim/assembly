@@ -1,9 +1,9 @@
 name: run-tests
 on:
   pull_request:
-    branches: [test]
+    branches: gtest-KKiiim
   push:
-    branches: test
+    branches: gtest-KKiiim
 
 jobs:
   gtest_qsort:
