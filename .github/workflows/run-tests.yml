@@ -1,8 +1,7 @@
 name:run-tests
-
 on:
   pull_request:
-    branches: test
+    branches: [test]
   push:
     branches: test
 
