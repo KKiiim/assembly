@@ -1,0 +1,23 @@
+name: run-tests
+on:
+  pull_request:
+    branches: [test]
+  push:
+    branches: test
+
+jobs:
+  gtest_qsort:
+    runs-on: ubuntu-latest
+    steps:
+      - name: aarch64
+        run: sudo apt-get update -y -qq && sudo apt-get install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu -y --no-install-recommends
+      - name: installcmake
+        run: sudo apt-get clean && sudo apt-get update -y && sudo apt-get install libgtest-dev cmake make gcc-12 g++-12 build-essential clang-tidy clang-format git sed -y --no-install-recommends
+      - name: install gTest
+        run: cd /usr/src/gtest && cmake CMakeLists.txt && make -j $(nproc) && cp ./lib/*.a /usr/lib
+      
+      - name: complier
+        run: gcc -o qsort/final-qsort/output_file qsort/final-qsort/ccgtest.c
+      
+      - name: ruun
+        run: qsort/final-qsort/output_file
