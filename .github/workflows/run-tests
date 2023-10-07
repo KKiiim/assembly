@@ -2,9 +2,9 @@ name:run-tests
 
 on:
   pull_request:
-    branches: main
+    branches: test
   push:
-    branches: main
+    branches: test
 
 jobs:
   gtest_qsort:
