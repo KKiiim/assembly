@@ -10,7 +10,7 @@ void myqsort(int *arr, int left, int right)
   int i = left;
   int j = right;
   while(i != j){
-    while(arr[j[ >= tmp && j > i) j--;
+    while(arr[j] >= tmp && j > i) j--;
     while(arr[i] <= tmp && j > i) i++;
     int t = arr[i];
     arr[i] = arr[j];
