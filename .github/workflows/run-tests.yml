@@ -9,17 +9,15 @@ jobs:
   gtest_qsort:
     runs-on: ubuntu-latest
     steps:
-      -name: gcc aarch64
+      - name: aarch64
         run: apt-get update -y -qq && apt-get install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu -y --no-install-recommends
-                
-      -name: install cmake make gcc ... 
+      - name: installcmake
         run: apt-get clean && apt-get update -y && apt-get install libgtest-dev cmake make gcc-12 g++-12 build-essential clang-tidy clang-format git sed -y --no-install-recommends
-      
-      -name: install gTest
+      - name: install gTest
         run: cd /usr/src/gtest && cmake CMakeLists.txt && make -j $(nproc) && cp ./lib/*.a /usr/lib
       
-      -name: complier
+      - name: complier
         run: gcc-aarch64-linux-gnu -o qsort/final-qsort/output_file qsort/final-qsort/asmQsort.s qsort/final-qsort/qsort.c
       
-      -name: ruun
+      - name: ruun
         run: qsort/final-qsort/output_file
