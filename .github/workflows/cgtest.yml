@@ -11,9 +11,7 @@ jobs:
     steps:
       - name: install gcc gTest
         run: 
-         sudo apt-get update -y -qq && sudo apt-get install gcc libgtest-dev cmake make gcc-12 g++-12 build-essential clang-tidy clang-format git sed -y --no-install-recommends
-         
-         cd /usr/src/gtest && cmake CMakeLists.txt && make && sudo cp ./lib/*.a /usr/lib
+         sudo apt-get update -y -qq && sudo apt-get install gcc libgtest-dev cmake make  build-essential sed -y --no-install-recommends
       
       - name: complier
         run: gcc -o output_file qsort/final-qsort/ccgtest.c -lgtest -lpthread
