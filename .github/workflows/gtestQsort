@@ -1,0 +1,24 @@
+name:run-tests
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  Build:
+    runs-on: [ cawe-linux-x64-compute-large ]
+    steps:
+      - uses: actions/checkout@v3
+
+      -name: install gcc aarch64 cmake make
+      run: 
+          apt-get update -y -qq && apt-get install  gcc -y --no-install-recommends
+          apt-get install libgtest-dev cmake make gcc-12 g++-12 build-essential clang-tidy clang-format git sed -y --no-install-recommends
+      
+      -name: build
+      run: 
+        cd /usr/src/gtest && cmake CMakeLists.txt && make -j $(nproc) && cp ./lib/*.a /usr/lib
+        gcc -o qsort/final-qsort/output_file qsort/final-qsort/asmQsort.s qsort/final-qsort/qsort.c
+
+      -name: ruun
+        run: qsort/final-qsort/output_file
