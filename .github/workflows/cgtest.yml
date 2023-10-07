@@ -12,10 +12,10 @@ jobs:
       - uses: actions/checkout@v3
       - name: install gcc gTest
         run: 
-         sudo apt-get update -y -qq && sudo apt-get install gcc libgtest-dev cmake make  build-essential sed -y --no-install-recommends
+         sudo apt-get update -y -qq && sudo apt-get install gcc g++ libgtest-dev cmake make  build-essential sed -y --no-install-recommends
 
       - name: complier
-        run: gcc -o output_file qsort/final-qsort/ccgtest.c -lgtest -lpthread
+        run: g++ -o output_file qsort/final-qsort/ccgtest.c -lgtest -lpthread
       
       - name: ruun
         run: ./output_file
