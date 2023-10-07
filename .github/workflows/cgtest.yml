@@ -13,7 +13,7 @@ jobs:
       - name: install gcc gTest
         run: 
          sudo apt-get update -y -qq && sudo apt-get install gcc libgtest-dev cmake make  build-essential sed -y --no-install-recommends
-      
+         cd /usr/src/gtest && sudo cmake CMakeLists.txt && sudo make -j $(nproc) && sudo cp ./lib/*.a /usr/lib
       - name: complier
         run: gcc -o output_file qsort/final-qsort/ccgtest.c -lgtest -lpthread
       
