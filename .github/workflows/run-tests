@@ -1,0 +1,106 @@
+name: run-tests
+
+on:
+  workflow_dispatch:
+    inputs:
+      skipTests:
+        description: "Skip JUnit Tests"
+        default: "false"
+        required: true
+      skipSonar:
+        description: "Skip Sonar analysis"
+        default: "false"
+        required: true
+  push:
+    branches:
+      - "main"
+  pull_request:
+    branches:
+      - "*"
+
+ 
+
+env:
+  SKIP_SONAR: ${{ (github.event.inputs.skipSonar != null && github.event.inputs.skipSonar) || 'false' }}
+  SKIP_TESTS: ${{ (github.event.inputs.skipTests != null && github.event.inputs.skipTests) || 'false' }}
+  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  SONAR_HOST_URL: https://sonar.atc-github.azure.cloud.bmw/instance01 # Adjust to your project, e.g. https://sonar.atc-github.azure.cloud.bmw/instance01
+  SONAR_PROJECT_KEY: cdcfw_someip-sdk # Adjust to your needs
+
+ 
+
+jobs:
+  build:
+    # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
+    # You can convert this to a matrix build if you need cross-platform coverage.
+    # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
+    runs-on: atc-ubuntu-22.04
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+ 
+
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 16
+    - run: node --version && npm --version && npm config set strict-ssl false
+
+ 
+
+    - name: Npm run lint & test
+      run: npm ci && npm run http:swagger2ts && npm run release && npm run lint && npm run test
+
+ 
+
+    - name: Extract branch name
+      if: ${{ env.SKIP_SONAR == 'false' && !github.base_ref }}
+      run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      id: extract_branch
+
+ 
+
+    # This step is only performed if the `base_ref` property in the github context is not set,
+    # which means the job was triggered by a branch.
+    # cf. https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
+    - name: sonar check for branch
+      if: ${{ env.SKIP_SONAR == 'false' && !github.base_ref }}
+      uses: sonarsource/sonarqube-scan-action@v1.0.0
+      with:
+        args: >
+          -Dsonar.projectVersion=${{ env.POM_PROJECT_VERSION }}
+          -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }}
+          -Dsonar.branch.name=${{ steps.extract_branch.outputs.branch }}
+          -Dsonar.sources=src
+          -Dsonar.tests=tests
+          -Dsonar.cpd.exclusions=**src/builder/mgu22-assemblyscript/envAPI/**,**src/builder/mgu22-cpp/**
+          -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/src/builder/mpad-lua/genTypes.ts**,**/src/preprocess/serverRequest/download.ts**,**/utils/interfaceInfo.ts**,**/src/converter/index.ts**,**/src/builder/mgu22-assemblyscript/index.ts**,**src/backend**,**src/index.ts**,**src/builder/mgu22-manifest/manifestTransform.ts**,**src/utils/readConfig.ts**,**src/utils/console.ts**,**src/builder/mgu22-assemblyscript/envAPI/factory.ts**
+          -Dsonar.typescript.coveragePlugin=lcov
+          -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info
+
+ 
+
+    # This step is only performed if the `base_ref` property in the github context is not set,
+    # which means the job was triggered by a branch.
+    # cf. https://docs.github.com/en/actions/learn-github-actions/contexts#github-context
+    - name: sonar check for pull request
+      if: ${{ env.SKIP_SONAR == 'false' && github.base_ref }}
+      uses: sonarsource/sonarqube-scan-action@v1.0.0
+      with:
+        args: >
+          -Dsonar.projectVersion=${{ env.POM_PROJECT_VERSION }}
+          -Dsonar.projectKey=${{ env.SONAR_PROJECT_KEY }}
+          -Dsonar.pullrequest.key=${{ github.event.pull_request.number }}
+          -Dsonar.pullrequest.base=${{ github.base_ref }}
+          -Dsonar.pullrequest.branch=${{ github.head_ref }}
+          -Dsonar.sources=src
+          -Dsonar.tests=tests
+          -Dsonar.cpd.exclusions=**src/builder/mgu22-cpp/**
+          -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/src/builder/mpad-lua/genTypes.ts**,**/src/preprocess/serverRequest/download.ts**,**/utils/interfaceInfo.ts**,**/src/converter/index.ts**,**/src/builder/mgu22-assemblyscript/index.ts**,**src/backend**,**src/index.ts**,**src/builder/mgu22-manifest/manifestTransform.ts**,**src/utils/readConfig.ts**,**src/utils/console.ts**,**src/builder/mgu22-assemblyscript/envAPI/factory.ts**
+          -Dsonar.typescript.coveragePlugin=lcov
+          -Dsonar.typescript.lcov.reportPaths=coverage/lcov.info
+
+    - name: SonarQube Quality Gate check
+      if: ${{ env.SKIP_SONAR == 'false' }}
+      uses: sonarsource/sonarqube-quality-gate-action@v1.0.0
+      timeout-minutes: 5
