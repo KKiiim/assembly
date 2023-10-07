@@ -6,6 +6,10 @@ on:
   push:
     branches: main
 
+jobs:
+  gtest_qsort:
+    runs-on: ubuntu-latest
+    steps:
 -name: gcc aarch64
   run: apt-get update -y -qq && apt-get install  gcc-aarch64-linux-gnu g++-aarch64-linux-gnu -y --no-install-recommends
           
