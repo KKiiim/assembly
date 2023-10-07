@@ -13,10 +13,10 @@ jobs:
         run: 
          sudo apt-get update -y -qq && sudo apt-get install gcc
          sudo apt-get install libgtest-dev cmake make gcc-12 g++-12 build-essential clang-tidy clang-format git sed -y --no-install-recommends
-         cd /usr/src/gtest && cmake CMakeLists.txt && make -j $(nproc) && sudo cp ./lib/*.a /usr/lib
+         cd /usr/src/gtest && cmake CMakeLists.txt && make && sudo cp ./lib/*.a /usr/lib
       
       - name: complier
-        run: gcc -o qsort/final-qsort/output_file qsort/final-qsort/ccgtest.c
+        run: gcc -o output_file qsort/final-qsort/ccgtest.c -lgtest -lpthread
       
       - name: ruun
-        run: qsort/final-qsort/output_file
+        run: ./output_file
