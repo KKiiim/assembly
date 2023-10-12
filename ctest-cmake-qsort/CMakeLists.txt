@@ -32,12 +32,13 @@ add_executable(ctestQsort $<TARGET_OBJECTS:asm_objects> $<TARGET_OBJECTS:c_objec
 enable_testing()
 target_link_libraries(ctestQsort
     gtest
+    gtest_main
     pthread
 )
 
 add_test(
     NAME qsort
-    COMMAND $<TARGET_FILE:ctestQsort>
+    COMMAND "qemu-aarch64" -L /usr/aarch64-linux-gnu ../bin/ctestQsort
 )
 
 #gtest_add_tests(TARGET ${ctestQsort})
