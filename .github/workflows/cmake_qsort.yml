@@ -1,0 +1,24 @@
+name: run-tests
+on:
+  pull_request:
+    branches: gtest-KKiiim
+  push:
+    branches: gtest-KKiiim
+
+jobs:
+  gtest_qsort:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: install gcc make cmake
+        run: 
+         sudo apt-get update -y -qq && sudo apt-get install gcc g++ cmake make build-essential sed -y --no-install-recommends
+
+      - name: install gcc-aarch64-linux-gnu and qemu-user
+        run: 
+          sudo apt-get install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu && sudo apt install qemu-user
+      
+      - name: cmake make and run
+        run: 
+          cd qsort/ctest-cmake-qsort && mkdir build && cd build && cmake .. && make && qemu-aarch64 -L /usr/aarch64-linux-gnu/ ../bin/ctestQsort
+          
