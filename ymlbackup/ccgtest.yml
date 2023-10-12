@@ -1,0 +1,21 @@
+name: run-tests
+on:
+  pull_request:
+    branches: gtest-KKiiim
+  push:
+    branches: gtest-KKiiim
+
+jobs:
+  gtest_qsort:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: install gcc gTest
+        run: 
+         sudo apt-get update -y -qq && sudo apt-get install gcc g++ libgtest-dev cmake make  build-essential sed -y --no-install-recommends
+
+      - name: complier
+        run: g++ -o output_file ccgtest.c -lgtest -lpthread
+      
+      - name: ruun
+        run: ./output_file
