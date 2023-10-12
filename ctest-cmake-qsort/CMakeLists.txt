@@ -19,7 +19,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
 
 # 设置汇编文件和C文件的路径
 set(ASM_SOURCE ${HOME}/src/asmQsort.s)
-set(C_SOURCE ${HOME}/src/qsort.c)
+set(C_SOURCE ${HOME}/src/qsort.cpp)
 
 # 将汇编文件和C文件编译为对象文件
 enable_language(ASM)
@@ -28,3 +28,16 @@ add_library(c_objects OBJECT ${C_SOURCE})
 
 # 链接对象文件生成可执行文件
 add_executable(ctestQsort $<TARGET_OBJECTS:asm_objects> $<TARGET_OBJECTS:c_objects>)
+
+enable_testing()
+target_link_libraries(ctestQsort
+    gtest
+    pthread
+)
+
+add_test(
+    NAME qsort
+    COMMAND $<TARGET_FILE:ctestQsort>
+)
+
+#gtest_add_tests(TARGET ${ctestQsort})
