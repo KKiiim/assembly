@@ -23,4 +23,4 @@ jobs:
         run: 
           cd qsort/final-qsort/
           aarch64-linux-gnu-g++ -o qsort_gtest asmQsort.s qsort.c -I${HOME}/gtest/gtest-build/_install/lib -lgtest -lpthread
-          qemu-aarch64 -L /usr/aarch64-linux-gnu/ ./qsort_gtest 
+          qemu-aarch64 ./qsort_gtest 
