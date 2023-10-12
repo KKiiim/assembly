@@ -1,0 +1,28 @@
+name: run-tests
+on:
+  pull_request:
+    branches: gtest-KKiiim
+  push:
+    branches: gtest-KKiiim
+
+jobs:
+  gtest_qsort:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: install gcc make cmake
+        run: 
+         sudo apt-get update -y -qq && sudo apt-get install gcc g++ cmake make build-essential sed -y --no-install-recommends
+
+      - name: install gcc-aarch64-linux-gnu and qemu-user
+        run: sudo apt-get install gcc-aarch64-linux-gnu && sudo apt install qemu-user
+      
+      - name: build gtest-arm
+        run:
+          mkdir ~/gtest && cd ~/gtest && git clone https://github.com/google/googletest.git && mkdir ~/gtest/gtest-build && cd gtest-build/ && cmake ../googletest/ -DCMAKE_INSTALL_PREFIX=./_install && make && make install && mkdir ~/gtest/gtest-build-arm && cd ~/gtest/gtest-build-arm && cmake ../googletest -DMAKE_INSTALL_PREFIX=./_install -DCMAKE_CXX_COMPILER=${TOOLCHAIN_PATH}/bin/aarch64-linux-gnu-g++ && sudo make && sudo make install
+      
+      - name: complie and run
+        run: 
+          cd qsort/final-qsort/
+          aarch64-linux-gnu-g++ -o qsort_gtest asmQsort.s qsort.c -I${HOME}/gtest/gtest-build/_install/lib -lgtest -lpthread
+          qemu-aarch64 -L /usr/aarch64-linux-gnu/ ./qsort_gtest 
