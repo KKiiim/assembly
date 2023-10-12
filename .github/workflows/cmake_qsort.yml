@@ -20,5 +20,4 @@ jobs:
       
       - name: cmake make and run
         run: 
-          cd qsort/ctest-cmake-qsort && mkdir build && cd build && cmake .. && make && qemu-aarch64 -L /usr/aarch64-linux-gnu/ ../bin/ctestQsort
-          
+          cd ctest-cmake-qsort && mkdir build && cd build && cmake .. && make && ctest ctestQsort

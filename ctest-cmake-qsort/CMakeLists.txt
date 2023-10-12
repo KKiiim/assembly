@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.15)
 project(ctest-qsort)
-#set(HOME /workspaces/assembly/qsort/ctest-cmake-qsort)
+
 set(HOME ${PROJECT_SOURCE_DIR})
 set(EXECUTABLE_OUTPUT_PATH ${HOME}/bin/)
 include_directories(${PROJECT_SOURCE_DIR}/include)

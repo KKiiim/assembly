@@ -1,4 +1,0 @@
-/workspaces/assembly/qsort/final-qsort/build/CMakeFiles/rebuild_cache.dir
-/workspaces/assembly/qsort/final-qsort/build/CMakeFiles/edit_cache.dir
-/workspaces/assembly/qsort/final-qsort/build/CMakeFiles/test.dir
-/workspaces/assembly/qsort/final-qsort/build/CMakeFiles/ctestQsort.dir
