@@ -1,0 +1,23 @@
+name: run-tests
+on:
+  pull_request:
+    branches: gtest-KKiiim
+  push:
+    branches: gtest-KKiiim
+
+jobs:
+  gtest_qsort:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: install gcc make cmake
+        run: 
+         sudo apt-get update -y -qq && sudo apt-get install gcc g++ libgtest-dev cmake make build-essential sed -y --no-install-recommends
+
+      - name: install emsdk
+        run: 
+          git clone https://github.com/emscripten-core/emsdk.git && cd emsdk/ && ./emsdk install latest
+      
+      - name: cmake make and run
+        run: 
+          cd ctest-cmake-qsort && mkdir build && cd build && cmake .. && make && ctest
