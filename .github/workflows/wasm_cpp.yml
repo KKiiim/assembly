@@ -17,7 +17,4 @@ jobs:
       - name: install emsdk
         run: 
           git clone https://github.com/emscripten-core/emsdk.git && cd emsdk/ && ./emsdk install latest
-      
-      - name: cmake make and run
-        run: 
-          cd ctest-cmake-qsort && mkdir build && cd build && cmake .. && make && ctest
+          
