@@ -1,4 +1,4 @@
-name: run-tests
+name: wasm-tests
 on:
   pull_request:
     branches: gtest-KKiiim
@@ -6,7 +6,7 @@ on:
     branches: gtest-KKiiim
 
 jobs:
-  gtest_qsort:
+  wasm-test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
