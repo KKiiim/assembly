@@ -10,11 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: install gcc make cmake
+      - name: install mocha
         run: 
-         sudo apt-get update -y -qq && sudo apt-get install gcc g++ libgtest-dev cmake make build-essential sed -y --no-install-recommends
-
-      - name: install emsdk
-        run: 
-          git clone https://github.com/emscripten-core/emsdk.git && cd emsdk/ && ./emsdk install latest
+          cd wasm-practice/sum-n && npm install -g mocha && npm install --save-dev mocha
           
+      - name: sum_n mocha-test
+        run:
+            npx mocha sum_n.test.js
