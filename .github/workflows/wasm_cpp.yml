@@ -16,4 +16,4 @@ jobs:
           
       - name: sum_n mocha-test
         run:
-            npx mocha sum_n.test.js
+            npx mocha ./sum_n.test.js
