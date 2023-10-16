@@ -10,10 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: install mocha
+      - name: install mocha and run sum_n mocha-test
         run: 
-          cd wasm-practice/sum-n && npm install -g mocha && npm install --save-dev mocha
-          
-      - name: sum_n mocha-test
-        run:
-            npx mocha ./sum_n.test.js
+          cd wasm-practice/sum-n && npm install -g mocha && npm install --save-dev mocha && npx mocha sum_n.test.js
