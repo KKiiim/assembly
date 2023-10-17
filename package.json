@@ -4,33 +4,36 @@
     "description": "unit test framework",
     "main": "",
     "bin": {
-      "js-test": ""
+        "js-test": ""
     },
     "type": "module",
     "engines": {
-      "node": ">= 16.0.0"
+        "node": ">= 16.0.0"
     },
     "scripts": {
-      "prepare": "",
-      "build": "",
-      "test": ""
+        "prepare": "",
+        "build": "",
+        "test": ""
     },
     "dependencies": {
-      "chalk": "^5.2.0",
-      "commander": "^8.3.0",
-      "cross-spawn": "^7.0.3",
-      "fs-extra": "^11.1.1",
-      "glob": "^10.2.6",
-      "ignore": "^5.2.4",
-      "semver": "^7.5.3"
+        "chalk": "^5.2.0",
+        "commander": "^8.3.0",
+        "cross-spawn": "^7.0.3",
+        "fs-extra": "^11.1.1",
+        "glob": "^10.2.6",
+        "ignore": "^5.2.4",
+        "semver": "^7.5.3"
     },
     "keywords": [
-      "javascript",
-      "WASM"
+        "javascript",
+        "WASM"
     ],
     "repository": {
-      "type": "git",
-      "url": "https://github.com/KKiiim/assembly/tree/gtest-KKiiim"
+        "type": "git",
+        "url": "https://github.com/KKiiim/assembly/tree/gtest-KKiiim"
     },
-    "license": "ISC"
-  }
+    "license": "ISC",
+    "devDependencies": {
+        "mocha": "^10.2.0"
+    }
+}
