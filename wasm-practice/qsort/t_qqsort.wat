@@ -3,13 +3,14 @@
   (type $t1 (func))
   (type $t2 (func (param i32 i32 i32) (result i32)))
   (import "js" "memory" (memory 1))
-  (func $myqsort (export "myqsort") (param $baseAddr_0 i32) (param $left_1 i32) (param $right_2 i32)
+  (func $myqsort (export "myqsort") (param i32) (param i32) (param i32)
     (local $a_right_8 i32) (local $a_left_9 i32)     ;; addr
-    (local $v_right_7 i32) (local $v_left_6 i32)     ;; value arr[left] arr[right]
     (local $j_right_3 i32) (local $i_left_4 i32)     ;; tmp value, j, i
-    (local $right_5 i32)
-    (local $tmp_10 i32) (local $tmp_11 i32)(local $tmp_12 i32)
     (local $tmp_g i32)(local $tt_1 i32)(local $i_index i32)(local $j_index i32)
+    (local $baseAddr_0 i32)(local $left_1 i32)(local $right_2 i32)
+    local.set $right_2
+    local.set $left_1
+    local.set $baseAddr_0
     (if
      (i32.gt_s
       (local.get $left_1)
