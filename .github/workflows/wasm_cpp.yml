@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: install wat2wasm, mocha
-        run: sudo apt-get install update && sudo apt-get install wabt && npm install -g mocha && npm install --save-dev mocha
+        run: sudo apt update && sudo apt install wabt && npm install -g mocha && npm install --save-dev mocha
       - name: run sum_n mocha-test
         working-directory: ./wasm-practice/sum-n
         run: wat2wasm t_sumn.wat -o mysum_n.wasm && npx mocha sum_n.test.js
