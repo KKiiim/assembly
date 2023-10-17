@@ -10,14 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: install mocha
+        run: npm install -g mocha && npm install --save-dev mocha
       - name: run sum_n mocha-test
-        run: 
-          cd wasm-practice/sum-n && npm install -g mocha && npm install --save-dev mocha && npx mocha sum_n.test.js
-      
+        working-directory: ./wasm-practice/sum-n
+        run: wat2wasm t_sumn.wat -o mysum_n.wasm && npx mocha sum_n.test.js
       - name: run add2num mocha-test
-        run:
-          cd wasm-practice/add2num && npm install -g mocha && npm install --save-dev mocha && npx mocha add.test.js
-
+        working-directory: ./wasm-practice/add2num
+        run: wat2wasm t_add.wat -o mysum.wasm && npx mocha add.test.js
       - name: run abs_if mocha-test
-        run:
-          cd wasm-practice/abs_if && npm install -g mocha && npm install --save-dev mocha && npx mocha abs.test.js
+        working-directory: ./wasm-practice/abs_if
+        run: wat2wasm t_abs.wat -o myabs.wasm && npx mocha abs.test.js
