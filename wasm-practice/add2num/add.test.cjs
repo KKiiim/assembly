@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { getResult } = require("./add.js");
+const { getResult } = require("./add.cjs");
 
 const { test, suite } = require("mocha");
 
