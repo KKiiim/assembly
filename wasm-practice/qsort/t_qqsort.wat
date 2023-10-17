@@ -8,9 +8,10 @@
     (local $j_right_3 i32) (local $i_left_4 i32)     ;; tmp value, j, i
     (local $tmp_g i32)(local $tt_1 i32)(local $i_index i32)(local $j_index i32)
     (local $baseAddr_0 i32)(local $left_1 i32)(local $right_2 i32)
-    local.set $right_2
-    local.set $left_1
-    local.set $baseAddr_0
+    (local.set $right_2)
+    (local.set $left_1)
+    (local.set $baseAddr_0)
+    
     (if
      (i32.gt_s
       (local.get $left_1)
@@ -20,19 +21,19 @@
      () ;; else continue
     )
     
-    local.get $baseAddr_0
-    local.get $left_1
-    i32.const 2
-    i32.shl
-    i32.add
-    local.tee $a_left_9
-    i32.load    ;; get arr[left]
-    local.set $tmp_g    ;; get tmp
+    (local.get $baseAddr_0)
+    (local.get $left_1)
+    (i32.const 2)
+    (i32.shl)
+    (i32.add)
+    (local.tee $a_left_9)
+    (i32.load)    ;; get arr[left]
+    (local.set $tmp_g )   ;; get tmp
 
-    local.get $left_1
-    local.set $i_left_4
-    local.get $right_2
-    local.set $j_right_3  ;; get i, j
+    (local.get $left_1)
+    (local.set $i_left_4)
+    (local.get $right_2)
+    (local.set $j_right_3)  ;; get i, j
  
     (block $lable$0 ;; while(i, j)
      (if
