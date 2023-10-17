@@ -23,13 +23,14 @@
     (local.set $sp_r
       (local.get $sp_register)
     )
-
+(;
     (i32.load
       (i32.sub  ;;addr
         (local.get $sp_r)
         (i32.const 4)
       )  
     ) ;; stack: i  
+;)  ;; location of i is empty
     (i32.load
       (i32.sub  ;;addr
         (local.get $sp_r)
@@ -44,7 +45,7 @@
     ) ;; stack: i right, left
     (local.set $left_1)
     (local.set $right_2)
-    (local.set $para_i)
+ ;;   (local.set $para_i)
     ;; stack: non
     
     (if
@@ -55,7 +56,7 @@
      (return
       (i32.sub
         (local.get $sp_r)
-        (i32.const 8)
+        (i32.const 12)
       )
      )
     ;; else continue
@@ -182,9 +183,27 @@
     (i32.store
      (local.get $i_index)     ;;addr
      (local.get $tmp_g)     ;;value
-    )    
-    
-    ;;call 1
+    )
+
+    (local.set $pare_i
+      (local.get $i_left_4)
+    )
+    ;; put i in the empty space below sp_r
+    ;; until now, 12B below sp_r become full
+    ;; para i is calculated in current func
+    (i32.store
+      (i32.sub
+        (local.get $sp_r)
+        (i32.const 4)
+      )
+      (local.get $para_i)
+    )
+    ;; caller can not determinate callee's i
+    ;; empty space wait callee itself to calculate and fill the i space
+
+
+    ;; prepare left, right for next callee, but i space if empty
+    ;; call 1
     (i32.store
       (local.get $sp_r)
       (local.get $left_1)
@@ -195,65 +214,75 @@
         (i32.const 4)
       )
       (i32.sub
-        (local.get $i_left_4)
+        (local.get $para_i)
         (i32.const 1)
       )
-    )
-    (i32.store
-      (local.get $para_i)
     )
     (call $myqsort_helper
       (i32.add
         (local.get $sp_r)
-        (i32.const 8)  
+        (i32.const 12)  
       )
     )
-    ;; after call, get sp_r
-    (local.set $sp_r
-      (local.get $callee_sp)
-    )
+    ;; after call, get sp_r from return value on stack
+    (local.set $sp_r)
+    ;; reload left and right and i to local
+    (i32.load
+      (i32.sub  ;;addr
+        (local.get $sp_r)
+        (i32.const 4)
+      )  
+    ) ;; stack: i  
+    (i32.load
+      (i32.sub  ;;addr
+        (local.get $sp_r)
+        (i32.const 8)
+      )  
+    ) ;; stack: i right
+    (i32.load
+      (i32.sub
+        (local.get $sp_r)
+        (i32.const 12)
+      )
+    ) ;; stack: i right, left
+    (local.set $left_1)
+    (local.set $right_2)
+    (local.set $para_i)
+    ;; stack: non
 
-    ;;call 2
+    ;; after prepare
+    ;; call 2
+    ;; put ee-left aka i+1
     (i32.store
+      (local.get $sp_r)
       (i32.add
-        (
-        )
+        (local.get $para_i)
         (i32.const 1)
-
       )
     )
+    ;; put ee-right aka right
     (i32.store
       (i32.add
         (local.get $sp_r)
         (i32.const 4)
       )
-      (i32.sub
-        (local.get $i_left_4)
-        (i32.const 1)
-      )
+      (local.get $right_2)
     )
     (call $myqsort_helper
       (i32.add
         (local.get $sp_r)
-        (i32.const 8)  
+        (i32.const 12)  
       )
     )
-    ;; after call, get sp_r
-    (local.set $sp_r
-      (local.get $callee_sp)
-    )
-
-
-
-    ;; return callee_sp
+    ;; after call, get sp_r from return value on stack
+    (local.set $sp_r)
     (return
       (i32.sub
         (local.get $sp_r)
-        (i32.const 8)
+        (i32.const 12)
       )
     )
 
-  )
   ;; 导出 getter 和 setter 函数接口
   (func (export "wasm2js") (param $index i32)(result i32)
     (local.get $index)
