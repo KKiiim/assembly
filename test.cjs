@@ -1,18 +1,19 @@
 const Mocha = require('mocha');
+const fs = require('fs');
+const path = require('path');
 
-// 创建 Mocha 实例
 const mocha = new Mocha();
+const testDir = path.join(__dirname, 'test');
 
-// 添加测试文件
-mocha.addFile('./wasm-practice/abs_if/abs.test.cjs');
-mocha.addFile('./wasm-practice/add2num/add.test.cjs');
-mocha.addFile('./wasm-practice/sum-n/sum_n.test.cjs');
-mocha.addFile('./wasm-practice/qsort/qqsort.test.cjs');
+fs.readdirSync(testDir).forEach((file) => {
+  if (file.endsWith('.cjs')) {
+    mocha.addFile(path.join(testDir, file));
+  }
+});
 
 // 配置 Mocha
 mocha.reporter('spec');
 
-// 执行测试
 mocha.run((failures) => {
   process.exitCode = failures ? 1 : 0;
 });
