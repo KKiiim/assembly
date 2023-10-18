@@ -28,7 +28,7 @@ function getResult() {
           qsortFunc(0, jsArray.length);
 
           for (let i = 0; i < jsArray.length; i++){
-            jsArray[i] = wasm2js(i);
+            jsArray[i] = wasm2js(i+1);
           }
 
 
