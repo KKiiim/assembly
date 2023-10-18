@@ -3,7 +3,7 @@ const fs = require('fs');
 // 异步加载 .wasm 文件
 function getResult() {
   return new Promise((resolve, reject) => {
-    fs.readFile("myqsort.wasm", (error, buffer) => {
+    fs.readFile("./wasm-practice/qsort/myqsort.wasm", (error, buffer) => {
       if (error) {
         console.error("Failed to load WebAssembly module:", error);
         reject(error);

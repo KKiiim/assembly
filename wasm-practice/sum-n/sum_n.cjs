@@ -2,7 +2,7 @@ const fs = require("fs");
 
 function getResult() {
   return new Promise((resolve, reject) => {
-    fs.readFile("mysum_n.wasm", (error, buffer) => {
+    fs.readFile("./wasm-practice/sum-n/mysum_n.wasm", (error, buffer) => {
       if (error) {
         console.error("Failed to load WebAssembly module:", error);
         reject(error);
