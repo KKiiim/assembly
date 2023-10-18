@@ -10,9 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: install wat2wasm, mocha
-        run: sudo apt-get update && sudo apt-get install wabt make && npm install --save-dev mocha
-      - name: wat2wasm make
-        run: mkdir build && make
-      - name: run mocha-test
-        run: node test.cjs
+      - name: install
+        run: npm install
+      - name: run mocha-test 
+        run: npm run start
