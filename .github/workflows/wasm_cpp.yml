@@ -21,3 +21,6 @@ jobs:
       - name: run abs_if mocha-test
         working-directory: ./wasm-practice/abs_if
         run: wat2wasm t_abs.wat -o myabs.wasm && npx mocha abs.test.cjs
+      - name: run qsort mocha-test
+        working-directory: ./wasm-practice/qsort
+        run: wat2wasm t_qqsort.wat -o myqsort.wasm && npx mocha qqsort.test.cjs
