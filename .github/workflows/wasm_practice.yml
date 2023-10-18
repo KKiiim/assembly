@@ -1,0 +1,16 @@
+name: wasm-tests
+on:
+  pull_request:
+    branches: gtest-KKiiim
+  push:
+    branches: gtest-KKiiim
+
+jobs:
+  wasm-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: install wat2wasm, mocha and make
+        run: sudo apt update && sudo apt install wabt make && npm install mocha && npm install --save-dev mocha && make
+      - name: run mocha-test
+        run: node test.cjs
