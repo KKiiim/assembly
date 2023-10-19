@@ -19,7 +19,7 @@
   },
   "scripts": {
     "build": "rm build -rf && mkdir build && make && tsc",
-    "start": "mocha --timeout 10000 ./test/**/*.cjs .test/*.js"
+    "start": "mocha --timeout 10000 ./test/**/*.cjs ./test/*.js"
   },
   "author": "Kim",
   "license": "ISC"
