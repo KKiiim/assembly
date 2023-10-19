@@ -1,18 +1,23 @@
 {
   "name": "wasm-practice",
   "version": "1.0.0",
-  "description": "assembly language project",
+  "description": "a wasm learning project",
+  "keywords": [
+    "wasm",
+    "mocha",
+    "wat"
+  ],
   "main": "index.js",
-  "directories": {
-    "test": "test"
+  "devDependencies": {
+    "wabt": "^1.0.33",
+    "make": "^4.3.0",
+    "mocha": "^10.2.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "compile": "mkdir build && make",
+    "unittest": "mocha --timeout 10000 ./test/**/*.cjs",
+    "start": "npm run compile && npm run unittest"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "mocha": "^10.2.0"
-  }
+  "author": "Kim",
+  "license": "ISC"
 }
