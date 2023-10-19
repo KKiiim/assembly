@@ -1,0 +1,21 @@
+{
+  "name": "wasm-practice",
+  "version": "1.0.0",
+  "description": "a wasm learning project",
+  "keywords": [
+    "wasm",
+    "mocha",
+    "wat"
+  ],
+  "main": "index.js",
+  "devDependencies": {
+    "mocha": "^10.0.0"
+  },
+  "scripts": {
+    "compile": "mkdir build && make",
+    "unittest": "mocha --timeout 10000 ./test/**/*.cjs",
+    "start": "npm run compile && npm run unittest"
+  },
+  "author": "Kim",
+  "license": "ISC"
+}
