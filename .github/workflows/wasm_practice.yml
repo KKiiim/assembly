@@ -13,4 +13,4 @@ jobs:
       - name: install and npm install
         run: sudo apt-get install make wabt && npm install
       - name: run mocha-test 
-        run: npm run start
+        run: npm run build && npm run test
