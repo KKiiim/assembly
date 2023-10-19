@@ -21,4 +21,8 @@ async function getResult() {
 
     return rArray;
 }
+<<<<<<< HEAD
 export const processor = {getResult};
+=======
+export const processor = {getResult};
+>>>>>>> b84df5b (Create c-qsort.ts)
