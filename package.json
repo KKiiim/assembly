@@ -10,6 +10,7 @@
   "devDependencies": {
     "mocha": "^10.0.0",
     "@types/chai": "^4.3.9",
+    "@types/node": "^20.4.2",
     "@types/mocha": "^10.0.3",
     "@types/sinon": "^10.0.20",
     "chai": "^4.3.10",
