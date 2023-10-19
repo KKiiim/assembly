@@ -9,8 +9,7 @@
   ],
   "main": "index.js",
   "devDependencies": {
-    "wabt": "^1.0.33",
-    "mocha": "^10.2.0"
+    "mocha": "^10.0.0"
   },
   "scripts": {
     "compile": "mkdir build && make",
