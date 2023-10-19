@@ -3,7 +3,7 @@ WAT_DIR = src
 WASM_DIR = build
 
 
-all: sum-n add2num abs_if qsort
+all: sum-n add2num abs_if qsort c-qsort
 
 .PHONY: sum-n
 sum-n:
@@ -20,6 +20,10 @@ abs_if:
 .PHONY: qsort
 qsort:
 	$(WAT2WASM) $(WAT_DIR)/t_qqsort.wat -o $(WASM_DIR)/myqsort.wasm
+
+.PHONY: c-qsort
+c-qsort:
+	clang --target=wasm32 --no-standard-libraries -Wl,--export-all -Wl,--no-entry $(WAT_DIR)/c-qsort.c -o $(WASM_DIR)/myc-qsort.wasm
 
 clean:
 	rm -f $(WASM_DIR)/my*.wasm
