@@ -5,8 +5,8 @@ const { getResult } = require(mydir);
 const { test, suite } = require("mocha");
 
 async function runTests() {
-  suite("sum_n", () => {
-    test("sum_n", async () => {
+  suite("abs", () => {
+    test("abs", async () => {
       const result = await getResult();
       assert.strictEqual(result, 99);
     });
