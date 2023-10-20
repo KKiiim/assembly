@@ -1,16 +1,12 @@
 import assert from "node:assert";
-import { processor } from "../src/asQsort.js";
+import { processor } from "../src/sum_n-from-ts.js";
 import { test, suite } from "mocha";
 //------------------------------------------------------------------------------
 // Tests
 //------------------------------------------------------------------------------
-suite("as-qsort", () => {
-  test("as-qsort", async () => {
+suite("ts-sum_n", () => {
+  test("ts-sum_n", async () => {
     const result = await processor.getResult();
-    const rArray = [0, 1, 2, 3, 4, 5];
-
-    for(let i = 0; i < rArray.length; i++){
-        assert.strictEqual(result[i], rArray[i]);
-    }
+    assert.strictEqual(result, 15);
   });
 });
