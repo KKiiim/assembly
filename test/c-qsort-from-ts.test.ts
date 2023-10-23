@@ -13,8 +13,4 @@ suite("c-qsort", () => {
         assert.strictEqual(result[i], rArray[i]);
     }
   });
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> 951115b (Create c-qsort.test.ts)
