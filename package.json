@@ -14,12 +14,16 @@
     "@types/sinon": "^10.0.20",
     "assemblyscript": "^0.27.14",
     "chai": "^4.3.10",
+    "eslint": "^8.52.0",
+    "eslint-plugin-react": "^7.33.2",
     "mocha": "^10.2.0",
+    "prettier": "3.0.3",
     "sinon": "^16.1.3",
     "typescript": "^5.2.2"
   },
   "scripts": {
     "build": "rm build -rf && mkdir build && make && tsc",
+    "eslint-prettier": "eslint --ext .js,.vue src --fix && npx prettier . --check",
     "start": "mocha --timeout 10000 ./test/**/*.cjs ./test/*.js"
   },
   "author": "Kim",

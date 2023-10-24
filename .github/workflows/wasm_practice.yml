@@ -12,5 +12,5 @@ jobs:
       - uses: actions/checkout@v3
       - name: install and npm install
         run: sudo apt-get install make wabt && npm install
-      - name: run mocha-test 
-        run: npm run build && npm run start
+      - name: run check and mocha-test
+        run: npm run build && npm run eslint-prettier && npm run start
