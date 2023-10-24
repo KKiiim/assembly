@@ -23,7 +23,7 @@
   },
   "scripts": {
     "build": "rm build -rf && mkdir build && make && tsc",
-    "eslint-prettier": "eslint --ext .js,.vue src --fix && npx prettier . --check",
+    "eslint-prettier": "npx prettier . --write && eslint --ext .js,.vue src --fix && npx prettier . --check",
     "start": "mocha --timeout 10000 ./test/**/*.cjs ./test/*.js"
   },
   "author": "Kim",
